@@ -25,16 +25,8 @@ function App() {
     evt.stopPropagation()
   }
 
+  // useEffect call insures that the input updates and calculations are synced to the latest input data.
   useEffect(() => {
-    // console.log('text box inside use effect: ', productNameInput);
-    // console.log('text box inside use effect: ', abvInput);
-    // console.log("text box inside use effect: ", size0Bottled);
-    // console.log('text box inside use effect: ', size1Bottled);
-    // console.log('text box inside use effect: ', size2Bottled);
-    // console.log('text box inside use effect: ', size3Bottled);
-    // console.log('text box inside use effect: ', size4Bottled);
-    // console.log('text box inside use effect: ', litersBottled);
-    // console.log('text box inside use effect: ', LAABottled);
     calcLitersBottled();
     calcLAABottled();
   }, [dateInput, productNameInput, abvInput, size0Bottled, size1Bottled, size2Bottled, size3Bottled, size4Bottled, litersBottled, LAABottled]);

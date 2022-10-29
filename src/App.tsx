@@ -87,6 +87,23 @@ function App() {
   return (
     <div className="App">
       Bottling Log
+      {logEntries.map((entry, index) => {
+        return (
+          
+          <tr>
+            <td>{entry.date}</td>
+            <td>{entry.productName}</td>
+            <td>{entry.size0qty}</td>
+            <td>{entry.size1qty}</td>
+            <td>{entry.size2qty}</td>
+            <td>{entry.size3qty}</td>
+            <td>{entry.size4qty}</td>
+            <td>{entry.totalLiters}</td>
+            <td>{entry.totalLAA}</td>
+          
+          </tr>
+        )
+      })}
       <table>
         <thead>
           <tr>

@@ -15,6 +15,8 @@ function App() {
   const [litersBottled,     setLitersBottled]     = useState(0);
   const [LAABottled,        setLAABottled]        = useState(0);
 
+  const [logEntries,        setLogEntries]        = useState<BottlingEntry>();
+
   
   const inputLineListener = (evt: any) => {
     //evt.persist();
@@ -59,6 +61,27 @@ function App() {
     return LAA;
   }
 
+  const createBottlingLogEntry = () => {
+    let entry: BottlingEntry = {
+      date: dateInput,
+      productName: productNameInput,
+      abv: parseFloat(abvInput),
+      size0qty: parseInt(size0Bottled),
+      size2qty: parseInt(size2Bottled),
+      size1qty: parseInt(size1Bottled),
+      size3qty: parseInt(size3Bottled),
+      size4qty: parseInt(size4Bottled),
+      totalLiters: litersBottled,
+      totalLAA: LAABottled
+    }
+
+    console.log(entry);
+
+    // TODO: figure out state variable for array of log entries
+    //setLogEntries(logEntries, ...entry);
+
+  }
+
   return (
     <div className="App">
       Bottling Log
@@ -82,6 +105,7 @@ function App() {
 
         <td id="litersDisplay"        >{litersBottled} Liters</td>
         <td id="litersAADisplay"      >{LAABottled} LAA</td>
+        <td><button onClick={() => createBottlingLogEntry()}>Add</button></td>
       </tr>
         </tbody>
       </table>

@@ -15,6 +15,8 @@ function App() {
   const [litersBottled,     setLitersBottled]     = useState(0);
   const [LAABottled,        setLAABottled]        = useState(0);
 
+  const [logEntries,        setLogEntries]        = useState<BottlingEntry[]>([]);
+
   
   const inputLineListener = (evt: any) => {
     //evt.persist();
@@ -59,9 +61,49 @@ function App() {
     return LAA;
   }
 
+  const createBottlingLogEntry = () => {
+    let entry: BottlingEntry = {
+      date: dateInput,
+      productName: productNameInput,
+      abv: parseFloat(abvInput),
+      size0qty: parseInt(size0Bottled),
+      size2qty: parseInt(size2Bottled),
+      size1qty: parseInt(size1Bottled),
+      size3qty: parseInt(size3Bottled),
+      size4qty: parseInt(size4Bottled),
+      totalLiters: litersBottled,
+      totalLAA: LAABottled
+    }
+
+    console.log(entry);
+
+    setLogEntries( logEntries => [...logEntries, entry]);
+    // TODO: figure out state variable for array of log entries
+    //setLogEntries(logEntries, ...entry);
+
+    console.log(`state variable: ${JSON.stringify(logEntries)}`)
+  }
+
   return (
     <div className="App">
       Bottling Log
+      {logEntries.map((entry, index) => {
+        return (
+          
+          <tr>
+            <td>{entry.date}</td>
+            <td>{entry.productName}</td>
+            <td>{entry.size0qty}</td>
+            <td>{entry.size1qty}</td>
+            <td>{entry.size2qty}</td>
+            <td>{entry.size3qty}</td>
+            <td>{entry.size4qty}</td>
+            <td>{entry.totalLiters}</td>
+            <td>{entry.totalLAA}</td>
+          
+          </tr>
+        )
+      })}
       <table>
         <thead>
           <tr>
@@ -82,6 +124,7 @@ function App() {
 
         <td id="litersDisplay"        >{litersBottled} Liters</td>
         <td id="litersAADisplay"      >{LAABottled} LAA</td>
+        <td><button onClick={() => createBottlingLogEntry()}>Add</button></td>
       </tr>
         </tbody>
       </table>

@@ -86,6 +86,7 @@ function App() {
     if(entry.productName != "" && entry.date != "" && entry.abv != 0){
       console.log(entry);
       setLogEntries( logEntries => [...logEntries, entry]);
+      clearInputRow();
     } else {
       console.warn(`not a valid entry`);
     }
@@ -93,7 +94,7 @@ function App() {
 
     //console.log(`state variable: ${JSON.stringify(logEntries)}`)
 
-    clearInputRow();
+    
     
     //sortLogEntries();
   }
@@ -127,12 +128,12 @@ function App() {
 
     setDateInput("");
     setProductNameInput("");
-    setAbvInput("")
-    setSize0Bottled("")
-    setSize1Bottled("")     
-    setSize2Bottled("")     
-    setSize3Bottled("")     
-    setSize4Bottled("")     
+    setAbvInput("0")
+    setSize0Bottled("0")
+    setSize1Bottled("0")     
+    setSize2Bottled("0")     
+    setSize3Bottled("0")     
+    setSize4Bottled("0")     
     setLitersBottled(0)    
     setLAABottled(0)       
   }
@@ -194,6 +195,7 @@ function App() {
       </tr>
         </tbody>
       </table>
+      <button>debug</button>
     </div>
   )
 }

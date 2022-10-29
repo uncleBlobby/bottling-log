@@ -15,7 +15,7 @@ function App() {
   const [litersBottled,     setLitersBottled]     = useState(0);
   const [LAABottled,        setLAABottled]        = useState(0);
 
-  const [logEntries,        setLogEntries]        = useState<BottlingEntry>();
+  const [logEntries,        setLogEntries]        = useState<BottlingEntry[]>([]);
 
   
   const inputLineListener = (evt: any) => {
@@ -77,9 +77,11 @@ function App() {
 
     console.log(entry);
 
+    setLogEntries( logEntries => [...logEntries, entry]);
     // TODO: figure out state variable for array of log entries
     //setLogEntries(logEntries, ...entry);
 
+    console.log(`state variable: ${JSON.stringify(logEntries)}`)
   }
 
   return (

@@ -1,5 +1,5 @@
 interface BottlingEntry {
-    date: Date;
+    date: string;
     productName: string;
     abv: number;
     size0qty: number;
@@ -9,4 +9,12 @@ interface BottlingEntry {
     size4qty: number;
     totalLiters: number;
     totalLAA: number;
+    uuid: string;
+    createdAt: string;
 };
+
+interface Product {
+    name: string;
+    type: string;
+    abv: number;
+}

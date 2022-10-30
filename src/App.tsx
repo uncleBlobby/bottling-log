@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { generateUUID } from './uuidGenerator';
 
+import { database, writeToDatabase } from './db/db';
+
+import { ref, set, onValue } from 'firebase/database'
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -18,11 +22,13 @@ function App() {
 
   const [logEntries,        setLogEntries]        = useState<BottlingEntry[]>([]);
 
-  
+  const [DBLogEntries,      setDBLogEntries]      = useState<BottlingEntry[]>([]);
+
+
   const inputLineListener = (evt: any) => {
     //evt.persist();
-    console.log(evt.target.id);
-    console.log(evt.target.value);
+    //console.log(evt.target.id);
+    //console.log(evt.target.value);
     calcLitersBottled();
     calcLAABottled();
     evt.stopPropagation()
@@ -32,14 +38,17 @@ function App() {
   useEffect(() => {
     calcLitersBottled();
     calcLAABottled();
-  }, [dateInput, productNameInput, abvInput, size0Bottled, size1Bottled, size2Bottled, size3Bottled, size4Bottled, litersBottled, LAABottled]);
+    console.log(`state var: ${logEntries}`)
+    writeToDatabase(logEntries); 
+
+  }, [dateInput, productNameInput, abvInput, size0Bottled, size1Bottled, size2Bottled, size3Bottled, size4Bottled, litersBottled, LAABottled, logEntries]);
 
   const calcLitersBottled = () => {
     let liters: number = 0;
 
     liters = ((parseFloat(size0Bottled) * .2) + (parseFloat(size1Bottled) * .375) + (parseFloat(size2Bottled) * .750) + (parseFloat(size3Bottled) * 1.14) + (parseFloat(size4Bottled) * 1.75))
-    console.log(`liters: ${liters}`)
-    console.log(`Liters bottled: ${liters}`)
+    //console.log(`liters: ${liters}`)
+    //console.log(`Liters bottled: ${liters}`)
 
     liters = parseFloat(liters.toFixed(2));
 
@@ -87,6 +96,7 @@ function App() {
       console.log(entry);
       setLogEntries( logEntries => [...logEntries, entry]);
       clearInputRow();
+
     } else {
       console.warn(`not a valid entry`);
     }
@@ -94,7 +104,7 @@ function App() {
 
     //console.log(`state variable: ${JSON.stringify(logEntries)}`)
 
-    
+       
     
     //sortLogEntries();
   }

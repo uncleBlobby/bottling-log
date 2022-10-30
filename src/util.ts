@@ -11,3 +11,15 @@ export const calcLitersBottled = (qty0: string, qty1: string, qty2: string, qty3
     return liters;
 
 }
+
+export const calcLAABottled = (abv: string, liters: number, update: Function) => {
+    let LAA: number = 0;
+
+    if (abv){
+        LAA = liters * (parseFloat(abv) / 100);
+        LAA = parseFloat(LAA.toFixed(2));
+        update(LAA);
+    }
+
+    return LAA;
+}

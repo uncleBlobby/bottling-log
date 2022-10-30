@@ -6,6 +6,8 @@ import { database, writeToDatabase } from './db/db';
 
 import { ref, set, onValue } from 'firebase/database'
 
+import { calcLitersBottled, calcLAABottled } from './util';
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -29,50 +31,19 @@ function App() {
     //evt.persist();
     //console.log(evt.target.id);
     //console.log(evt.target.value);
-    calcLitersBottled();
-    calcLAABottled();
+    calcLitersBottled(size0Bottled, size1Bottled, size2Bottled, size3Bottled, size4Bottled, setLitersBottled);
+    calcLAABottled(abvInput, litersBottled, setLAABottled);
     evt.stopPropagation()
   }
 
   // useEffect call insures that the input updates and calculations are synced to the latest input data.
   useEffect(() => {
-    calcLitersBottled();
-    calcLAABottled();
+    calcLitersBottled(size0Bottled, size1Bottled, size2Bottled, size3Bottled, size4Bottled, setLitersBottled);
+    calcLAABottled(abvInput, litersBottled, setLAABottled);
     console.log(`state var: ${logEntries}`)
     writeToDatabase(logEntries); 
 
   }, [dateInput, productNameInput, abvInput, size0Bottled, size1Bottled, size2Bottled, size3Bottled, size4Bottled, litersBottled, LAABottled, logEntries]);
-
-  const calcLitersBottled = () => {
-    let liters: number = 0;
-
-    liters = ((parseFloat(size0Bottled) * .2) + (parseFloat(size1Bottled) * .375) + (parseFloat(size2Bottled) * .750) + (parseFloat(size3Bottled) * 1.14) + (parseFloat(size4Bottled) * 1.75))
-    //console.log(`liters: ${liters}`)
-    //console.log(`Liters bottled: ${liters}`)
-
-    liters = parseFloat(liters.toFixed(2));
-
-    setLitersBottled(liters);
-    return liters;
-
-  }
-
-  const calcLAABottled = () => {
-    let LAA: number = 0;
-    let liters: number = 0;
-
-    if(abvInput){
-      liters = ((parseFloat(size0Bottled) * .2) + (parseFloat(size1Bottled) * .375) + (parseFloat(size2Bottled) * .750) + (parseFloat(size3Bottled) * 1.14) + (parseFloat(size4Bottled) * 1.75))
-
-      LAA = liters * (parseFloat(abvInput) / 100);
-
-      LAA = parseFloat(LAA.toFixed(2));
-
-      setLAABottled(LAA);
-    }
-    
-    return LAA;
-  }
 
   const createBottlingLogEntry = () => {
     let entry: BottlingEntry = {
